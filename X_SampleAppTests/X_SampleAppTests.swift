@@ -5,13 +5,30 @@
 //  Created by r.nagata on 2024/11/26.
 //
 
-import Testing
+import XCTest
 @testable import X_SampleApp
 
-struct X_SampleAppTests {
+class X_SampleAppTests: XCTestCase {
+    func testContentTrue() throws {
+        let pv = PostViewController()
+        let postData = PostDataModel()
+        postData.username = "TestUser"
+        postData.content = "Test Content"
+        pv.postData = postData
 
-    @Test func example() async throws {
-        // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+        let result1 = pv.checkContentValidity(postData.content)
+        XCTAssertTrue(result1)
+    }
+    
+    func testContentFalse() throws {
+        let pv = PostViewController()
+        let postData = PostDataModel()
+        postData.username = "TestUser"
+        postData.content = "あああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ"
+        pv.postData = postData
+
+        let result2 = pv.checkContentValidity(postData.content)
+        XCTAssertFalse(result2)
     }
 
 }
